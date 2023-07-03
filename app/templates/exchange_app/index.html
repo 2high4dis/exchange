@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="content">
+            <div class="header">
+                <h2>Currency Converter</h2>
+            </div>
+            <form id="form" action="" method="POST">
+                {% csrf_token %}
+                <div class="form_inputs">
+                    <div class="form_item">
+                        <label for="from-amount">Amount*</label>
+                        <input id="from-amount" type="number" name="from-amount" placeholder="Enter amount" {% if from_amount %} value="{{ from_amount }}" {% endif %}>
+                    </div>
+                    <div class="form_item">
+                        <label for="from-curr">From*</label>
+                        <select name="from-curr" id="from-curr" value="{{ from_curr }}">
+                        {% for curr in currencies %}
+                            <option value="{{ curr }}" {% if from_curr == curr %}selected{% endif %}>{{ curr }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form_item">
+                        <label for="to-amount">To*</label>
+                        <select name="to-curr" id="to-curr">
+                        {% for curr in currencies %}
+                            <option value="{{ curr }}" {% if to_curr == curr %}selected{% endif %}>{{ curr }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                {% if converted_amount %}
+                <div class="result">
+                    <div class="from-to">
+                        <h5>From <b>{{ from_curr }}</b> to <b>{{to_curr}}</b></h5>
+                    </div>
+                    <div class="convertation_result">
+                        {{ converted_amount }}
+                    </div>
+                </div>
+                {% endif %}
+                <div class="submit-btn">
+                    <button type="submit">Exchange</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
