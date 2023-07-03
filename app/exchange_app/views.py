@@ -1,11 +1,12 @@
 from django.shortcuts import render
 import requests
+from decouple import config
 
 
 def exchange(request):
 
     responce = requests.get(
-        url='https://v6.exchangerate-api.com/v6/16cf980d64fbad705c1cb61d/latest/USD').json()
+        url=config('API_LINK')).json()
     currencies = responce.get('conversion_rates')
 
     if request.method == 'GET':
